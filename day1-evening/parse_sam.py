@@ -7,17 +7,20 @@ numMatch = 0
 chrom10 = []
 lstMapq = []
 num2l = 0
-with open('debug.sam','r') as f:
+with open('SRR072893.sam','r') as f:
     for line in f:
         # count number of alignments
         numAlign += 1
+        # count number of alignments that match perfectly to genome
+        lenSeq = len(line.split('\t')[1].split('\t')[0])
+        alignScore = int(line.split('AS:i:')[1].split('\t')[0])
         # for first 10 alginments print just the column indicating which chromosome read
         if numAlign <= 10:
             chrom10.append(line.split('\t')[2].split('\t')[0])
         # list of mapq scores
-        lstMapq.append(int(line.split('\t')[3].split('\t')[0]))
+        lstMapq.append(int(line.split('\t')[4].split('\t')[0]))
         # number of reads that start alignment on chromosome 2L between base 10000 and 20000
-        chromNum = line.split('\t')[2].split('\t')[0])
+        chromNum = line.split('\t')[2].split('\t')[0]
         baseStart = int(line.split('\t')[3].split('\t')[0])
         if (chromNum == '2L') and (baseStart >= 10000 and baseStart <= 20000):
             num2l += 1
